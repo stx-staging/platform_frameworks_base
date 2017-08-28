@@ -672,7 +672,7 @@ public class GlobalActionsDialogLiteTest extends SysuiTestCase {
     public void testShouldLogRebootPress() {
         GlobalActionsDialogLite globalActionsDialogLite = createGlobalActionsDialogLite();
         GlobalActionsDialogLite.RestartAction restartAction =
-                globalActionsDialogLite.new RestartAction();
+                globalActionsDialogLite.new RestartAction(Display.DEFAULT_DISPLAY);
         restartAction.onPress();
         verifyLogPosted(GlobalActionsEvent.GA_REBOOT_PRESS, 0 /* position */);
     }
@@ -681,7 +681,7 @@ public class GlobalActionsDialogLiteTest extends SysuiTestCase {
     public void testShouldLogRebootLongPress() {
         GlobalActionsDialogLite globalActionsDialogLite = createGlobalActionsDialogLite();
         GlobalActionsDialogLite.RestartAction restartAction =
-                globalActionsDialogLite.new RestartAction();
+                globalActionsDialogLite.new RestartAction(Display.DEFAULT_DISPLAY);
         restartAction.onLongPress();
         verifyLogPosted(GlobalActionsEvent.GA_REBOOT_LONG_PRESS, 0 /* position */);
     }

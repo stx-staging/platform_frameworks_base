@@ -33,7 +33,9 @@ enum class GlobalActionType(val configKey: String) {
     EMERGENCY("emergency"),
     SCREENSHOT("screenshot"),
     SYSTEM_UPDATE("system_update"),
-    STANDBY("standby");
+    STANDBY("standby"),
+    REBOOT_RECOVERY("reboot_recovery"),
+    REBOOT_BOOTLOADER("reboot_bootloader");
 
     companion object {
         private val KEY_MAP = entries.associateBy { it.configKey }
