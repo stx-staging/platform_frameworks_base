@@ -36,6 +36,7 @@ import android.view.InputApplicationHandle;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.SurfaceControl;
+import android.view.WindowManagerPolicyConstants;
 
 import com.android.internal.os.TimeoutRecord;
 import com.android.internal.util.function.pooled.PooledLambda;
@@ -412,6 +413,16 @@ final class InputManagerCallback implements InputManagerService.WindowManagerCal
 
     private void updateInputDispatchModeLw() {
         mService.mInputManager.setInputDispatchMode(mInputDispatchEnabled, mInputDispatchFrozen);
+    }
+
+    @Override
+    public void registerPointerEventListener(WindowManagerPolicyConstants.PointerEventListener listener, int displayId) {
+        mService.registerPointerEventListener(listener, displayId);
+    }
+
+    @Override
+    public void unregisterPointerEventListener(WindowManagerPolicyConstants.PointerEventListener listener, int displayId) {
+        mService.unregisterPointerEventListener(listener, displayId);
     }
 
     void dump(PrintWriter pw, String prefix) {
