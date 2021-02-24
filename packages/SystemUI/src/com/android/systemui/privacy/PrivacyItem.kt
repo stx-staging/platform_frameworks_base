@@ -52,7 +52,7 @@ enum class PrivacyType(
         if (groupedPrivacyChip()) {
             R.drawable.ic_privacy_location
         } else {
-            com.android.internal.R.drawable.perm_group_location
+            com.android.internal.R.drawable.stat_sys_location
         },
         android.Manifest.permission_group.LOCATION,
         "location",
