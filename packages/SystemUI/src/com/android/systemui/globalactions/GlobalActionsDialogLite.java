@@ -200,6 +200,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
 
     private static final String GLOBAL_ACTION_KEY_REBOOT_RECOVERY = "reboot_recovery";
     private static final String GLOBAL_ACTION_KEY_REBOOT_BOOTLOADER = "reboot_bootloader";
+    private static final String GLOBAL_ACTION_KEY_REBOOT_FASTBOOT = "reboot_fastboot";
 
     // See NotificationManagerService#scheduleDurationReachedLocked
     private static final long TOAST_FADE_TIME = 333;
@@ -705,13 +706,18 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
 
         String[] rebootMenuActions = mContext.getResources().getStringArray(
                     com.android.internal.R.array.config_rebootActionsList);
+        boolean arEnabled = advancedRebootEnabled(mContext);
         for (String actionKey : rebootMenuActions) {
-            if (advancedRebootEnabled(mContext) && GLOBAL_ACTION_KEY_REBOOT_RECOVERY.equals(actionKey)) {
-                RebootRecoveryAction a = new RebootRecoveryAction();
-                addIfShouldShowAction(items, a);
-            } else if (advancedRebootEnabled(mContext) && GLOBAL_ACTION_KEY_REBOOT_BOOTLOADER.equals(actionKey)) {
-                RebootBootloaderAction a = new RebootBootloaderAction();
-                addIfShouldShowAction(items, a);
+            if (arEnabled) {
+                if (GLOBAL_ACTION_KEY_REBOOT_RECOVERY.equals(actionKey)) {
+                    RebootRecoveryAction a = new RebootRecoveryAction();
+                    addIfShouldShowAction(items, a);
+                } else if (GLOBAL_ACTION_KEY_REBOOT_BOOTLOADER.equals(actionKey)) {
+                    RebootBootloaderAction a = new RebootBootloaderAction();
+                    addIfShouldShowAction(items, a);
+                } else if (GLOBAL_ACTION_KEY_REBOOT_FASTBOOT.equals(actionKey)) {
+                    addIfShouldShowAction(items, new RebootFastbootAction());
+                }
             }
         }
         return items;
@@ -725,6 +731,13 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
     private boolean usePowerOptionsMenu(List<Action> actions, Action shutdownAction, Action restartAction) {
         return actions.contains(shutdownAction) && actions.contains(restartAction)
                 && actions.size() > getMaxShownPowerItems();
+    }
+
+    private boolean isFastbootAvailable() {
+        final boolean dynamic = SystemProperties.getBoolean("ro.boot.dynamic_partitions", false);
+        final boolean retrofit = SystemProperties.getBoolean("ro.boot.dynamic_partitions_retrofit", false);
+        final boolean overrideFastboot = SystemProperties.getBoolean("ro.fastbootd.available", false);
+        return dynamic || retrofit || overrideFastboot;
     }
 
     @VisibleForTesting
@@ -748,6 +761,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         RestartAction restartAction = new RestartAction(Display.DEFAULT_DISPLAY);
         RebootRecoveryAction rbtRecoveryAction = new RebootRecoveryAction();
         RebootBootloaderAction rbtBlAction = new RebootBootloaderAction();
+        RebootFastbootAction rbtFbAction = new RebootFastbootAction();
         List<Action> tempActions = new ArrayList<>();
         CurrentUserProvider currentUser = new CurrentUserProvider();
         final UserInfo currentUserInfo = currentUser.get();
@@ -819,6 +833,11 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                         addIfShouldShowAction(tempActions, rbtBlAction);
                     }
                     break;
+                case REBOOT_FASTBOOT:
+                    if (advancedRebootEnabled(mContext)) {
+                        addIfShouldShowAction(tempActions, rbtFbAction);
+                    }
+                    break;
                 case SCREENSHOT:
                     addIfShouldShowAction(tempActions, new ScreenshotAction());
                     break;
@@ -865,6 +884,9 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
             if (advancedRebootEnabled(mContext)) {
                 mPowerItems.add(rbtRecoveryAction);
                 mPowerItems.add(rbtBlAction);
+                if (isFastbootAvailable()) {
+                    mPowerItems.add(rbtFbAction);
+                }
             }
         }
         if (tempActions.contains(restartAction)) {
@@ -1267,6 +1289,33 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         @Override
         public void onPress() {
             mWindowManagerFuncs.reboot(false, PowerManager.REBOOT_BOOTLOADER);
+        }
+    }
+
+    final class RebootFastbootAction extends SinglePressAction {
+        RebootFastbootAction() {
+            super(com.android.systemui.res.R.drawable.ic_lock_restart_fastboot,
+                    com.android.systemui.res.R.string.global_action_reboot_fastboot);
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return true;
+        }
+
+        @Override
+        public boolean showDuringRestrictedKeyguard() {
+            return false;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
+
+        @Override
+        public void onPress() {
+            mWindowManagerFuncs.reboot(false, PowerManager.REBOOT_FASTBOOT);
         }
     }
 
