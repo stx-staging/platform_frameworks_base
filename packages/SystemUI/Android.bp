@@ -478,12 +478,10 @@ android_library {
         "src/**/*.kt",
         "src/**/*.java",
         "src/**/I*.aidl",
+        ":DebugJavaFiles",
         "compose/features/src/**/*.kt",
         "compose/facade/enabled/src/**/*.kt",
-    ] + select(product_variable("debuggable"), {
-        true: [":DebugJavaFiles"],
-        false: [":ReleaseJavaFiles"],
-    }),
+    ],
     defaults: ["SystemUI-srcs-defaults"],
     static_libs: [
         "//frameworks/libs/systemui:compilelib",
