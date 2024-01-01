@@ -18,6 +18,7 @@ package com.android.systemui.globalactions
 
 import com.android.systemui.globalactions.data.repository.GlobalActionsRepository
 import com.android.systemui.globalactions.data.repository.impl.GlobalActionsRepositoryImpl
+import com.android.systemui.plugins.GlobalActions
 import dagger.Binds
 import dagger.Module
 
@@ -26,4 +27,13 @@ interface GlobalActionsModule {
     /**  */
     @Binds
     fun provideGlobalActionsRepository(impl: GlobalActionsRepositoryImpl): GlobalActionsRepository
+
+    /**  */
+    @Binds
+    abstract fun provideGlobalActions(controllerImpl: GlobalActionsImpl): GlobalActions
+
+    /**  */
+    @Binds
+    abstract fun provideGlobalActionsManager(controllerImpl: GlobalActionsComponent): GlobalActions.GlobalActionsManager
+
 }
