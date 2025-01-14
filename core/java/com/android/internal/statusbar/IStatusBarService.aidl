@@ -254,4 +254,9 @@ interface IStatusBarService
      * Starts the default assistant app.
      */
     void startAssist(in Bundle args);
+
+    /**
+     * Toggle recent apps.
+     */
+    void toggleRecentApps();
 }
