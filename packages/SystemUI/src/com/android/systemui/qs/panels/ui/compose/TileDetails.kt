@@ -59,6 +59,8 @@ import com.android.systemui.plugins.qs.TileDetailsViewModel
 import com.android.systemui.qs.flags.QsDetailedView
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileDetailsEntryWideCornerRadius
 import com.android.systemui.qs.panels.ui.viewmodel.DetailsViewModel
+import com.android.systemui.qs.tiles.dialog.AmbientMusicModesDetailsContent
+import com.android.systemui.qs.tiles.dialog.AmbientMusicModesDetailsViewModel
 import com.android.systemui.qs.tiles.dialog.AudioDetailsContent
 import com.android.systemui.qs.tiles.dialog.AudioDetailsViewModel
 import com.android.systemui.qs.tiles.dialog.CastDetailsContent
@@ -233,6 +235,7 @@ private fun MapTileDetailsContent(
             BluetoothDetailsContent(tileDetailsViewModel.detailsContentViewModel, onContentReady)
 
         is ModesDetailsViewModel -> ModesDetailsContent(tileDetailsViewModel)
+        is AmbientMusicModesDetailsViewModel -> AmbientMusicModesDetailsContent(tileDetailsViewModel)
         is CastDetailsViewModel -> CastDetailsContent(tileDetailsViewModel)
         is AudioDetailsViewModel -> AudioDetailsContent(tileDetailsViewModel)
     }
