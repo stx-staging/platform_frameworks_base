@@ -50,7 +50,7 @@ public class PropImitationHooks {
     private static final String PACKAGE_GMS = "com.google.android.gms";
     private static final String PROCESS_GMS_UNSTABLE = PACKAGE_GMS + ".unstable";
     private static final String PACKAGE_GPHOTOS = "com.google.android.apps.photos";
-
+    private static final String PACKAGE_NOW_PLAYING = "com.google.android.apps.pixel.nowplaying";
     private static final String PACKAGE_SETUPWIZARD = "com.google.android.setupwizard";
     private static final String PACKAGE_SUBSCRIPTION_RED =
             "com.google.android.apps.subscriptions.red";
@@ -80,9 +80,9 @@ public class PropImitationHooks {
                     "MANUFACTURER", "Google",
                     "BRAND", "google",
                     "MODEL", "Pixel 10 Pro XL",
-                    "ID", "BP4A.251205.006",
+                    "ID", "CP1A.260305.018",
                     "FINGERPRINT",
-                            "google/mustang/mustang:16/BP4A.251205.006/14401865:user/release-keys");
+                            "google/mustang/mustang:16/CP1A.260305.018/14887507:user/release-keys");
 
     private static final Map<String, String> sPixelTabletProps =
             Map.of(
@@ -167,6 +167,7 @@ public class PropImitationHooks {
 
         switch (packageName) {
             case PACKAGE_GMS:
+            case PACKAGE_NOW_PLAYING:
             case PACKAGE_SETUPWIZARD:
             case PACKAGE_SUBSCRIPTION_RED:
             case PACKAGE_VELVET:
