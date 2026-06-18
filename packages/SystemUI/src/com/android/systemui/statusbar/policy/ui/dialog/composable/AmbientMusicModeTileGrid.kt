@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.android.systemui.flags.DesktopSizing
 import com.android.systemui.statusbar.policy.ui.dialog.viewmodel.AmbientMusicModesDialogViewModel
 
 @Composable
@@ -48,6 +49,12 @@ fun AmbientMusicModeTileGrid(
             AmbientMusicModeTile(
                 viewModel = tiles[index],
                 type = getAmbientMusicModeTileType(inDetailsView, index, tiles.size),
+                dimension =
+                    if (inDetailsView && DesktopSizing.isEnabled) {
+                        AmbientMusicModeTileDimension.DesktopSizingDimens
+                    } else {
+                        AmbientMusicModeTileDimension.Default
+                    },
             )
         }
     }

@@ -20,9 +20,13 @@ package com.android.systemui.qs.tiles.dialog
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.unit.dp
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.policy.ui.dialog.composable.AmbientMusicModeTileGrid
+
+private const val AMBIENT_MUSIC_MODES_DETAILS_VIEW_TEST_TAG = "ambient_music_modes_details_view"
 
 @Composable
 fun AmbientMusicModesDetailsContent(viewModel: AmbientMusicModesDetailsViewModel) {
@@ -31,9 +35,12 @@ fun AmbientMusicModesDetailsContent(viewModel: AmbientMusicModesDetailsViewModel
         viewModel = viewModel.viewModel,
         modifier =
             Modifier.padding(
-                horizontal = dimensionResource(R.dimen.tile_details_horizontal_padding),
-                vertical = dimensionResource(R.dimen.tile_details_vertical_padding),
-            ),
+                    start = dimensionResource(R.dimen.tile_details_horizontal_padding),
+                    end = dimensionResource(R.dimen.tile_details_horizontal_padding),
+                    top = 0.dp,
+                    bottom = dimensionResource(R.dimen.tile_details_bottom_padding),
+                )
+                .testTag(AMBIENT_MUSIC_MODES_DETAILS_VIEW_TEST_TAG),
         inDetailsView = true,
     )
 }

@@ -147,6 +147,7 @@ constructor(
 
     override fun getDetailsViewModel(): TileDetailsViewModel {
         return AmbientMusicModesDetailsViewModel(
+            context = mContext,
             onSettingsClick = { userActionInteractor.handleLongClick(null) },
             viewModel = ambientMusicModesDialogViewModel,
         )

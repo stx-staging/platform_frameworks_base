@@ -33,16 +33,6 @@ data class AmbientMusicModesTileModel(
      * `com.android.systemui.res` itself).
      */
     val icon: Icon.Loaded,
-
-    /**
-     * The [ZenMode] that should be activated if no modes are active and the user taps on the
-     * secondary target of the tile.
-     */
-    // TODO: b/405988332 - When inlining modes_ui_tile_reactivates_last, this should be made
-    //  non-nullable; right now it's nullable so that the unflagged path isn't forced to set it.
-    // val quickMode: ZenMode?,
 ) {
-    // TODO: b/405988332 - When inlining modes_ui_tile_reactivates_last, `id` should be made
-    //  non-nullable; right now it's nullable so that the unflagged path isn't forced to set it.
-    data class ActiveMode(val id: String?, val name: String)
+    data class ActiveMode(val id: String, val name: String)
 }
