@@ -1618,6 +1618,7 @@ public class CommandQueue extends IStatusBar.Stub implements
     @Override
     public void onConfigurationChanged() throws RemoteException {
         mHandler.obtainMessage(MSG_ON_CONFIGURATION_CHANGED).sendToTarget();
+    }
 
     @Override
     public void toggleCameraFlash() {
