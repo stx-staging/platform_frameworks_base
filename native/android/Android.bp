@@ -142,8 +142,23 @@ cc_library_shared {
 
     shared_libs: [
         "libnetd_client",
-        "libcom.android.tethering.connectivity_native",
     ],
+
+    multilib: {
+        lib32: {
+            header_libs: [
+                "connectivity_native_headers",
+            ],
+            shared_libs: [
+                "libcom.android.tethering.connectivity_native_system",
+            ],
+        },
+        lib64: {
+            shared_libs: [
+                "libcom.android.tethering.connectivity_native",
+            ],
+        },
+    },
 
     include_dirs: ["bionic/libc/dns/include"],
 
@@ -170,8 +185,23 @@ cc_library_shared {
 
     shared_libs: [
         "libnetd_client",
-        "libcom.android.tethering.connectivity_native",
     ],
+
+    multilib: {
+        lib32: {
+            header_libs: [
+                "connectivity_native_headers",
+            ],
+            shared_libs: [
+                "libcom.android.tethering.connectivity_native_system",
+            ],
+        },
+        lib64: {
+            shared_libs: [
+                "libcom.android.tethering.connectivity_native",
+            ],
+        },
+    },
 
     include_dirs: ["bionic/libc/dns/include"],
 }
