@@ -452,7 +452,7 @@ interface PolicyModule {
                         labelRes = R.string.quick_settings_ambient_music_modes_label,
                     ),
                 instanceId = uiEventLogger.getNewInstanceId(),
-                category = TileCategory.CONNECTIVITY,
+                category = TileCategory.UTILITIES,
             )
 
         /** Inject ModesTile into tileViewModelMap in QSModule */
